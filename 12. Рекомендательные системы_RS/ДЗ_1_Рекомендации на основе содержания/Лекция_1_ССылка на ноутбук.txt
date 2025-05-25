@@ -1,0 +1,1 @@
+https://github.com/ALKONDR/netology-recsys/blob/master/lecture-1/lecture-1.ipynb

@@ -1,0 +1,73 @@
+--show dbs - все базы данных
+
+--use movies - переключение на базу данных movies
+
+--db - просмотр к какой базе данных подключились.
+
+-------------------
+
+--db.my_collection.insertOne({name: "Andrey", email: "shcher82@yandex.ru"}) - создание документа в коллекцию. Если такой коллекции нет, то она создается!
+
+--Если нужно вставить несколько документов, то в скобках вставляется массив insertMany([{}, {}])
+
+--db.my_collection.find() - выдает что есть в коллекции
+
+--db.my_collection.find({name: "Alex"}) - поиск конкретного ключа со значением(найдет всех с именем Алексей)
+
+--db.my_collection.find({name: "Alex", age: 30})  - (найдет всех с именем Алексей с возрастом 30, как бы оператор "and")
+
+--db.my_collection.find ({$or: [{name: "Alex"}, {age: 30}]}) найдёт всех Алексеев или всех у кого возраст 30
+
+--db.my_collection.find({}, {name: false}) - поиск всех ключей кроме "name" 
+
+--db.my_collection.find({}, {name: true}) - поиск всех ключей "name" 
+
+--db.movies.find({year: {$gt: 1915}})       -      $gt - больше, 
+                                                   $lt - меньше 
+                                                   $gte $lte - больши и равно, меньше и равно соответственно
+                                                   $in равно. Если нужно найти несколько значений, то обрамляется в массив: н-р {$in: [20, 30, 45]}
+--db.movies.find({year: {$in: [20, 30, 45]}})
+
+--db.my_collection.find ({$or: [{age: {$gt: 45}}, {age: {$lt: 50}}]) -- фильтр возраста больше 45 или меньше 50 
+
+---------------------
+
+--db.my_collection.drop() - удаляет всю коллекцию
+
+--db.my_collection.deleteOne({_id: 4}) - обЪект фильтр (удалит весь документ с ключами и значениями)
+--db.my_collection.deleteMany({year: 1984})
+
+------------------
+db.my_collection.replaceOne({фильтр - что меняем},{полное название json документа})
+
+--Пример:  
+db.employees.replaceOne({"studi_ID.diagnostics.ШГ": "A06.10.006.002"}, 
+                        {studi_ID: {diagnostics: {KAГ: "A06.10.006", Шунтография: "A06.10.006.003"}, interventions: {Стентирование_КА: "A16.12.004.009", БАП_КА: "A16.12.026.012"}}}
+                       )
+
+
+--db.employees.updateOne({фильтр}, {$inc:{age: 1 }}) - например увекличить возраст values на 1 ключа -age (-1 уменьшение)
+
+--db.employees.updateOne({name: "Andrey"}, {$set: {"Профессия": "Врач"}}) - пример вставки нового ключа со сначением
+                                            $unset - удаление.
+
+
+-------------------
+Группировка и Сумирование
+
+--db.clothes.aggregate({$group: {_id: 'итог', Сумма: {$sum: '$price'}}}) - группировка и сумирование
+--db.clothes.aggregate({$match: {category: 'Одежда'}}, {$group: {_id: 'итог', Сумма: {$sum: '$price'}}}) - фильтрация и группировка
+--db.clothes.aggregate({$group: {_id: '$category', Сумма: {$sum: '$price'}}}) - группировка по категириям и расчёт суммы по категории. Можно так же использовать фильтр  - $match: {category: 'Одежда'}} 
+--db.clothes.aggregate({$group: {_id: '$category', Сумма: {$sum: '$price'}, mean: {$avg: '$price'} }}) - группировка по категирии с расчётом нескольких метрик: суммы и среднее(avg)
+--db.clothes.aggregate({$group: {_id: '$category', Сумма: {$sum: '$price'}, Произв: {$sum: {$multiply: ['$price', '$qty']}} }}) - Группировка. Произведение прайса и остатка + сумирование 
+
+--------------------------------------------------------------------------
+
+db.employees.insertMany([
+  {empId: 1, name: 'Clark', dept: 'Sales' },
+  {empId: 2, name: 'Dave', dept: 'Accounting' },
+  {empId: 3, name: 'Ava', dept: 'Sales' },
+  {studi_ID: {diagnostics: {KAГ: "A06.10.006", ШГ: "A06.10.006.002"}, interventions: {Стентирование_КА: "A16.12.004.009", БАП_КА: "A16.12.026.012"}}}
+]);
+
+db.employees.find({"studi_ID.diagnostics.KAГ": "A06.10.006"})

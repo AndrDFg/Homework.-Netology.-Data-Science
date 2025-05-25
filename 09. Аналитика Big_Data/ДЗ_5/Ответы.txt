@@ -1,0 +1,16 @@
+- сохранение результата в текстовый файл (это Action или Transformation?);
+
+action
+
+- получение первых n-элементов массива (Action или Transformation?);
+
+Action
+
+- объединение двух RDD в один (Action или Transformation?);
+
+Transformation
+
+- в чем разница между Reduce и CoGroup-операторами (Action или Transformation?).
+
+Reduce - Action
+CoGroup - Transformation

@@ -1,0 +1,5 @@
+https://youtu.be/j8L07nuns2Y?si=9wzW8d-fxYK102yd - ДЕРЕВО РЕШЕНИЙ (DecisionTreeClassifier) | МАШИННОЕ ОБУЧЕНИЕ
+
+https://youtu.be/0mMeaC3gjNI?si=-uBG42AjD2lAcXAd - Как обучается дерево решений для регрессии. Decision Tree Regressor
+
+https://youtu.be/aWEdaXAZ01M?si=tgsB4LDCYNOrhvaf - КАК НЕ ПЕРЕОБУЧИТЬ ДЕРЕВО РЕШЕНИЙ Decision Tree | MAX DEPTH, MIN SAMPLES LEAF, MAX LEAF NODES
